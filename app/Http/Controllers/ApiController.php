@@ -11,6 +11,7 @@ use App\Models\Business;
 use App\Models\BusinessCategory;
 use App\Models\BusinessImages;
 use App\Models\BusinessOwner;
+use App\Models\Notification;
 use App\Modules\Areas\Models\Area;
 use App\Modules\Users\Models\UserRelation;
 
@@ -161,6 +162,25 @@ class ApiController extends Controller
     $business_images = BusinessImages::where('business_id', $request->business_id)->get();
     $url = asset('uploads/');
     return ["message"=> "Success.","status"=> "success",'data'=>[['business_detail'=>$business_detail, "business_owners"=>$business_owners,"business_images"=>$business_images, 'image_path'=>$url]]];
+ }
+ public function getNotifications(Request $request){
+    $notifications = Notification::where('user_id',$request->user_id)
+    ->where('read_status','0')
+    ->with('images')->get();
+
+
+    $url = asset('uploads/');
+    return ["message"=> "Success.","status"=> "success",'data'=>[['notifications'=>$notifications, 'image_path'=>$url]]];
+ }
+ public function updateNotificationReadStatus(Request $request){
+    $notifications = Notification::where('id',$request->notification_id)->first();
+    if($notifications)
+    {
+    $notifications->read_status = "1";
+    $notifications->save();
+    }
+
+    return ["message"=> "Success.","status"=> "success",'data'=>[]];
  }
 
 

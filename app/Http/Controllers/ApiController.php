@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppUser;
+use App\Models\BusinessCategory;
 use App\Modules\Areas\Models\Area;
+use App\Modules\Users\Models\UserRelation;
 
 class ApiController extends Controller
 {
@@ -115,6 +117,29 @@ class ApiController extends Controller
  public function getAreas(Request $request){
     $data = Area::all();
     return ["message"=> "Success.","status"=> "success",'data'=>[["areas"=>$data]]];
+ }
+
+ public function getContacts(Request $request){
+
+
+    $data = AppUser::all();
+    return ["message"=> "Success.","status"=> "success",'data'=>[["contacts"=>$data]]];
+ }
+
+ public function getRelations(Request $request){
+
+
+    $data = UserRelation::where('user_id', $request->user_id)->get();
+    return ["message"=> "Success.","status"=> "success",'data'=>[["relations"=>$data]]];
+ }
+
+ public function getBusinessCategories(Request $request){
+
+
+
+    $data = BusinessCategory::all();
+    $url = asset('uploads/categories/');
+    return ["message"=> "Success.","status"=> "success",'data'=>[["relations"=>$data, 'image_path'=>$url]]];
  }
 
 

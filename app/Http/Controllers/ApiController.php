@@ -120,13 +120,19 @@ class ApiController extends Controller
 
  public function getAreas(Request $request){
     $data = Area::all();
-    return ["message"=> "Success.","status"=> "success",'data'=>[["areas"=>$data]]];
+    $raw_data = [];
+        foreach($data as $item)
+        {
+            $item->total_contacts = AppUser::where('area_id', $item->id)->count();
+            $raw_data[] = $item;
+        }
+    return ["message"=> "Success.","status"=> "success",'data'=>[["areas"=>$raw_data]]];
  }
 
  public function getContacts(Request $request){
 
 
-    $data = AppUser::all();
+    $data = AppUser::where('area_id', $request->area_id)->get();
     return ["message"=> "Success.","status"=> "success",'data'=>[["contacts"=>$data]]];
  }
 
@@ -171,6 +177,14 @@ class ApiController extends Controller
 
     $url = asset('uploads/');
     return ["message"=> "Success.","status"=> "success",'data'=>[['notifications'=>$notifications, 'image_path'=>$url]]];
+ }
+ public function getNotificationCount(Request $request){
+    $notifications = Notification::where('user_id',$request->user_id)
+    ->where('read_status','0')->count();
+
+
+
+    return ["message"=> "Success.","status"=> "success",'data'=>[['total_notifications'=>$notifications]]];
  }
  public function updateNotificationReadStatus(Request $request){
     $notifications = Notification::where('id',$request->notification_id)->first();

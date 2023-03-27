@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Models\AppUser;
 use App\Models\Business;
 use App\Models\BusinessCategory;
+use App\Models\BusinessImages;
+use App\Models\BusinessOwner;
 use App\Modules\Areas\Models\Area;
 use App\Modules\Users\Models\UserRelation;
 
@@ -152,6 +154,13 @@ class ApiController extends Controller
     $data = Business::where('category_id', $request->category_id)->get();
     $url = asset('uploads/');
     return ["message"=> "Success.","status"=> "success",'data'=>[["businesses"=>$data, 'image_path'=>$url]]];
+ }
+ public function getBusinessDetail(Request $request){
+    $business_detail = Business::find($request->business_id);
+    $business_owners = BusinessOwner::where('business_id', $request->business_id)->get();
+    $business_images = BusinessImages::where('business_id', $request->business_id)->get();
+    $url = asset('uploads/');
+    return ["message"=> "Success.","status"=> "success",'data'=>[['business_detail'=>$business_detail, "business_owners"=>$business_owners,"business_images"=>$business_images, 'image_path'=>$url]]];
  }
 
 

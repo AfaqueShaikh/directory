@@ -14,6 +14,8 @@ Route::post('/get-areas', 'App\Http\Controllers\ApiController@getAreas');
 Route::post('/get-contacts', 'App\Http\Controllers\ApiController@getContacts');
 Route::post('/get-relations', 'App\Http\Controllers\ApiController@getRelations');
 Route::post('/get-business-categories', 'App\Http\Controllers\ApiController@getBusinessCategories');
+Route::post('/get-businesses', 'App\Http\Controllers\ApiController@getBusinesses');
+Route::post('/get-business-by-category', 'App\Http\Controllers\ApiController@getBusinessByCategory');
 
 Route::group([ 'middleware' => ['api_auth']], function(){
     // Route::post('/user/get-profile', 'App\Http\Controllers\ApiController@getUserProfile');

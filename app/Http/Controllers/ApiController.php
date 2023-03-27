@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppUser;
-
-
-
+use App\Modules\Areas\Models\Area;
 
 class ApiController extends Controller
 {
@@ -112,6 +110,11 @@ class ApiController extends Controller
  public function getUserProfile(Request $request){
     $user = AppUser::where('mobile',$request->mobile)->first();
     return ["message"=> "Success.","status"=> "success",'data'=>[["user_data"=>$user]]];
+ }
+
+ public function getAreas(Request $request){
+    $data = Area::all();
+    return ["message"=> "Success.","status"=> "success",'data'=>[["areas"=>$data]]];
  }
 
 

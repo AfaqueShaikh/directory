@@ -18,7 +18,12 @@ Route::post('/get-businesses', 'App\Http\Controllers\ApiController@getBusinesses
 Route::post('/get-business-by-category', 'App\Http\Controllers\ApiController@getBusinessByCategory');
 Route::post('/get-business-detail', 'App\Http\Controllers\ApiController@getBusinessDetail');
 Route::post('/get-notifications', 'App\Http\Controllers\ApiController@getNotifications');
+Route::post('/get-notifications-count', 'App\Http\Controllers\ApiController@getNotificationCount');
 Route::post('/update-notification-read-status', 'App\Http\Controllers\ApiController@updateNotificationReadStatus');
+Route::post('/user/add-relation', 'App\Http\Controllers\ApiController@addRelation');
+Route::post('/user/update-profile', 'App\Http\Controllers\ApiController@updateUserProfile');
+Route::post('/user/update-profile-picture', 'App\Http\Controllers\ApiController@updateUserProfilePicture');
+Route::post('/user/update-cover-picture', 'App\Http\Controllers\ApiController@updateUserCoverPicture');
 
 Route::group([ 'middleware' => ['api_auth']], function(){
     // Route::post('/user/get-profile', 'App\Http\Controllers\ApiController@getUserProfile');

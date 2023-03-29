@@ -115,7 +115,8 @@ class ApiController extends Controller
 
  public function getUserProfile(Request $request){
     $user = AppUser::where('mobile',$request->mobile)->first();
-    return ["message"=> "Success.","status"=> "success",'data'=>[["user_data"=>$user]]];
+    $url = asset('uploads/');
+    return ["message"=> "Success.","status"=> "success",'data'=>[["user_data"=>$user, 'image_path'=>$url]]];
  }
 
  public function getAreas(Request $request){
@@ -197,6 +198,69 @@ class ApiController extends Controller
     return ["message"=> "Success.","status"=> "success",'data'=>[]];
  }
 
+
+ public function addRelation(Request $request)
+ {
+    $r = new UserRelation();
+    $r->name = $request->name;
+    $r->relation = $request->relation;
+    $r->mobile = $request->mobile;
+    $r->user_id = $request->user_id;
+    $r->is_masked = $request->is_masked;
+    $r->save();
+
+    return ["message"=> "Success.","status"=> "success",'data'=>$r];
+ }
+
+ public function updateUserProfile(Request $request)
+ {
+
+
+    $user =  AppUser::where('id', $request->user_id)->first();
+        $user->name = $request->name;
+        // $user->mobile = $request->mobile;
+        $user->address_1 = $request->address_1;
+        $user->address_2 = $request->address_2;
+        $user->business_address = $request->business_address;
+        $user->business_name = $request->business_name;
+        $user->save();
+
+    return ["message"=> "Success.","status"=> "success",'data'=>$user];
+ }
+
+ public function updateUserProfilePicture(Request $request)
+ {
+
+
+    $user =  AppUser::where('id', $request->user_id)->first();
+    if($request->file('profile_image')){
+        $file= $request->file('profile_image');
+        $filename= date('YmdHi').$file->getClientOriginalName();
+        $file->move(public_path('uploads/'), $filename);
+        $user->profile_image = $filename;
+    }
+        $user->save();
+
+        $url = asset('uploads/')."/".$filename;
+        return ["message"=> "Success.","status"=> "success",'data'=>['image_path'=>$url]];
+ }
+
+ public function updateUserCoverPicture(Request $request)
+ {
+
+
+    $user =  AppUser::where('id', $request->user_id)->first();
+    if($request->file('cover_image')){
+        $file= $request->file('cover_image');
+        $filename= date('YmdHi').$file->getClientOriginalName();
+        $file->move(public_path('uploads/'), $filename);
+        $user->cover_image = $filename;
+    }
+        $user->save();
+
+        $url = asset('uploads/')."/".$filename;
+        return ["message"=> "Success.","status"=> "success",'data'=>['image_path'=>$url]];
+ }
 
 
 

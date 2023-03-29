@@ -24,6 +24,7 @@ Route::post('/user/add-relation', 'App\Http\Controllers\ApiController@addRelatio
 Route::post('/user/update-profile', 'App\Http\Controllers\ApiController@updateUserProfile');
 Route::post('/user/update-profile-picture', 'App\Http\Controllers\ApiController@updateUserProfilePicture');
 Route::post('/user/update-cover-picture', 'App\Http\Controllers\ApiController@updateUserCoverPicture');
+Route::post('/get-banners', 'App\Http\Controllers\ApiController@getBanners');
 
 Route::group([ 'middleware' => ['api_auth']], function(){
     // Route::post('/user/get-profile', 'App\Http\Controllers\ApiController@getUserProfile');

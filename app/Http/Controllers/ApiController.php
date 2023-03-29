@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppUser;
+use App\Models\Banner;
 use App\Models\Business;
 use App\Models\BusinessCategory;
 use App\Models\BusinessImages;
@@ -156,6 +157,12 @@ class ApiController extends Controller
     $data = Business::all();
     $url = asset('uploads/');
     return ["message"=> "Success.","status"=> "success",'data'=>[["businesses"=>$data, 'image_path'=>$url]]];
+ }
+
+ public function getBanners(Request $request){
+    $data = Banner::all();
+    $url = asset('uploads/');
+    return ["message"=> "Success.","status"=> "success",'data'=>[["banners"=>$data, 'image_path'=>$url]]];
  }
 
  public function getBusinessByCategory(Request $request){
